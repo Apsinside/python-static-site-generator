@@ -1,31 +1,75 @@
 import unittest
 
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode
 from sys import stdout
 from io import StringIO
 
 class TestHTMLNode(unittest.TestCase):
-    def test_print_to_html1(self):
-        node = HTMLNode("<h>", "hi",None, {"href": "https://www.google.com", "target": "_blank"})
-        html_props = node.props_to_html()
-        self.assertEqual(html_props, " href=\"https://www.google.com\" target=\"_blank\"")
+    def test_to_html_props(self):
+        node = HTMLNode(
+            "div",
+            "Hello, world!",
+            None,
+            {"class": "greeting", "href": "https://boot.dev"},
+        )
+        self.assertEqual(
+            node.props_to_html(),
+            ' class="greeting" href="https://boot.dev"',
+        )
 
-    def test_print_to_html2(self):
-        node = HTMLNode("<h>", "hi",None, {"href": "https://www.google.com"})
-        html_props= node.props_to_html()
-        self.assertEqual(html_props, " href=\"https://www.google.com\"")
+    def test_values(self):
+        node = HTMLNode(
+            "div",
+            "I wish I could read",
+        )
+        self.assertEqual(
+            node.tag,
+            "div",
+        )
+        self.assertEqual(
+            node.value,
+            "I wish I could read",
+        )
+        self.assertEqual(
+            node.children,
+            None,
+        )
+        self.assertEqual(
+            node.props,
+            None,
+        )
 
-    def test_print_to_html3(self):
-        node = HTMLNode("<h>", "hi",None, {"href": "https://www.google.com", "target": "_blank", "test" : "prop"})
-        html_props = node.props_to_html()
-        self.assertEqual(html_props, " href=\"https://www.google.com\" target=\"_blank\" test=\"prop\"")
+    def test_repr(self):
+        node = HTMLNode(
+            "p",
+            "What a strange world",
+            None,
+            {"class": "primary"},
+        )
+        self.assertEqual(
+            node.__repr__(),
+            "HTMLNode(p, What a strange world, children: None, {'class': 'primary'})",
+        )
 
-    def test_print_HTMLNode(self):
-        node = HTMLNode("<h>", "hi",None, {"href": "https://www.google.com"})   
-        with StringIO() as output:
-            print(node, file=output)
-            contents = output.getvalue()
-        self.assertEqual(contents, "HTMLNode(<h>, hi, None, {'href': 'https://www.google.com'})\n")
+    def test_leaf_to_html_p(self):
+        node = LeafNode("p", "Hello, world!")
+        self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
 
+    def test_leaf_to_html_href(self):
+        node = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
+        self.assertEqual(node.to_html(), "<a href=\"https://www.google.com\">Click me!</a>")
+
+    def test_leaf_to_html_image(self):
+        node = LeafNode("img", "Cat", {"src": "url/of/cat.jpg", "alt": "This is my cat"})
+        self.assertEqual(node.to_html(), "<img src=\"url/of/cat.jpg\" alt=\"This is my cat\">Cat</img>")
+
+    def test_leaf_to_html_empty_tag(self):
+        node = LeafNode(None, "This leaf node has no tag")
+        self.assertEqual(node.to_html(), "This leaf node has no tag")
+
+    def test_leaf_to_html_empty_value(self):
+        node = LeafNode(None,None)
+        self.assertRaises(ValueError, node.to_html)
+        
 if __name__ == "__main__":
     unittest.main()
