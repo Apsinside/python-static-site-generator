@@ -26,6 +26,8 @@ def text_node_to_html_node(text_node):
         case _:
             raise ValueError(f"invalid text type: {text_node.text_type}")
 
+            
+
 class TextNode:
     def __init__(self, text, text_type, url = None):
         self.text = text
