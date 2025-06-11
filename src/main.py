@@ -3,13 +3,25 @@ from inline_markdown import split_nodes_delimiter, extract_markdown_images, extr
 import re
 
 def main():
-    img_text = "This ![image](https://i.imgur.com/zjjcJKZ.png) is an image"
-    link_text= "This is text with a link [to boot dev](https://www.boot.dev"
+    md ="""
+    This is **bolded** paragraph
 
-    split_img_text = re.split(r"(?<!!)\[(.*?)\]\((.*?)\)", link_text)
-    matches = re.findall(r"(?<!!)\[(.*?)\]\((.*?)\)", link_text)
 
-    print(split_img_text)
-    print(matches)
+
+
+    This is another paragraph with _italic_ text and `code` here
+    This is the same paragraph on a new line
+
+    - This is a list
+    - with items
+    """
+    blocks = md.split("\n\n")
+    filtered_blocks = []
+    for block in blocks:
+        if block == "":
+            continue
+        block = block.strip()
+        filtered_blocks.append(block)
+    print(blocks)
 
 main()

@@ -5,7 +5,8 @@ from inline_markdown import (
     split_nodes_link,
     extract_markdown_links,
     extract_markdown_images,
-    text_to_textnodes
+    text_to_textnodes,
+    markdown_to_blocks
 )
 
 from textnode import TextNode, TextType 
@@ -280,7 +281,6 @@ class TestInlineMarkdown(unittest.TestCase):
             ,
             new_nodes,
         )
-
 
 if __name__ == "__main__":
     unittest.main()
