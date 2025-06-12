@@ -3,25 +3,8 @@ from inline_markdown import split_nodes_delimiter, extract_markdown_images, extr
 import re
 
 def main():
-    md ="""
-    This is **bolded** paragraph
-
-
-
-
-    This is another paragraph with _italic_ text and `code` here
-    This is the same paragraph on a new line
-
-    - This is a list
-    - with items
-    """
-    blocks = md.split("\n\n")
-    filtered_blocks = []
-    for block in blocks:
-        if block == "":
-            continue
-        block = block.strip()
-        filtered_blocks.append(block)
-    print(blocks)
+    block = "```this is some code```"
+    print(block[1:2])
+    print(block[len(block) - 3:])
 
 main()
