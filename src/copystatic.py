@@ -13,6 +13,6 @@ def copy_files_recursive(source, target):
             if os.path.isfile(source_path):
                 print("copying file " + dir + " -> " + target)
                 shutil.copy(source_path, target_path)
-            else:
-                targetPath = os.path.join(target, dir)              
+            else:         
                 copy_files_recursive(source_path,target_path)   
+
