@@ -17,7 +17,7 @@ def generate_page(from_path, template_path, dest_path, basepath):
     title = extract_title(markdown)
     content = markdown_to_html_node(markdown).to_html()
 
-    template = template.replace("{{ Title }}", title).replace("{{ Content }}", content).replace("href=\"/", f"href=\"{basepath}").replace("src=\"/", f"src=\"{basepath}")
+    template = template.replace("{{ Title }}", title).replace("{{ Content }}", content).replace("href=\"", f"href=\"{basepath}").replace("src=\"", f"src=\"{basepath}")
     with open(dest_path, "a") as file:
         file.write(template)
 
